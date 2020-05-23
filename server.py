@@ -18,14 +18,14 @@ server.listen(100)
 
 list_of_clients=[]
 def clientthread(conn,addr):
-    conn.send("Welcome to Chatroom")
+    conn.send("Welcome to Chatroom".encode())
     while True:
         try:
             message=conn.recv(2048)
             if message:
-                print("<"+addr[0]+">"+message)
-                message_to_send="<"+addr[0]+">"+message
-                broadcast(message_to_send,conn)
+                print("<"+addr[0]+">"+message.decode())
+                message_to_send="<"+addr[0]+">"+message.decode()
+                broadcast(message_to_send.encode(),conn)
             else:
                 remove(conn)
         except:
@@ -44,3 +44,5 @@ while True:
     start_new_thread(clientthread,(conn,addr))
 conn.close()
 server.close()
+#python3 server.py 192.168.43.221 8080
+#cd /mnt/c/users/harsh/desktop/projects/chatbox
